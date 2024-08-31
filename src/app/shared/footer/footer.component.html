@@ -4,8 +4,12 @@
   </p>
   <p><a [routerLink]="['/']">Home</a></p>
   <p><a [routerLink]="['/contacto']">Contacto</a></p>
-  <p><a [routerLink]="['/store']">Store</a></p>
   <p><a [routerLink]="['/not-found']">Not Found</a></p>
-  <p><a [routerLink]="['/login']">Login</a></p>
-  <p><a [routerLink]="['/logout']">Logout</a></p>
+  @if (usuario) {
+    <p><a [routerLink]="['/store']">Store</a></p>
+    <p><a [routerLink]="['/logout']">Logout</a></p>
+  }
+  @else {
+    <p><a [routerLink]="['/login']">Login</a></p>
+  }
 </div>
