@@ -25,9 +25,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PagesRoutingModule,
-    SharedModule,
-    IonicModule,
-    FormsModule
+    SharedModule, // Include SharedModule for common components and modules
+    IonicModule, // Include FormsModule for form validation
+    FormsModule // Include IonicModule for Ionic components
   ]
 })
 export class PagesModule { }

@@ -4,8 +4,8 @@ import { AuthService } from '../servicios/auth.service';
 import { map } from 'rxjs';
 
 export const redirectIfAuthGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+  const authService = inject(AuthService); // Obtener el servicio de autenticación
+  const router = inject(Router); // Obtener el router
 
   return authService.isLoggedIn().pipe(
     map(isAuthenticated => {
