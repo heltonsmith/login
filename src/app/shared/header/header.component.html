@@ -1,4 +1,4 @@
-<div class="cabecera">
+<div class="cabecera" [ngClass]="{'iniciado': usuario!==''}">
   @if (nombre){
     <p>
       Bienvenido: {{nombre}}
