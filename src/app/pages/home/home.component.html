@@ -1,0 +1,17 @@
+<ion-content>
+  <app-header></app-header>
+
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre"></ion-input>
+  </ion-item>
+
+  <ion-button (click)="guardarNombre()">Guardar Nombre</ion-button>
+  <br>
+  <ion-button (click)="eliminarNombre()">Eliminar Nombre</ion-button>
+
+  <p>
+    home works!
+  </p>
+  <app-footer></app-footer>
+</ion-content>
