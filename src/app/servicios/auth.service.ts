@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { usuariosSimulados } from '../models/data.models';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,44 @@ export class AuthService {
       this.loginFailedSubject.next(true);  // Establecer loginFailed a true si falla la autenticación
     }
   }
+
+
+  buscarBD2(usuario: string, clave: string): void { // Simulación de la autenticación con base en datos fijas
+    const usuarioEncontrado = usuariosSimulados.find( // Buscar un usuario en la lista de usuarios simulados
+      u => u.usuario === usuario && u.clave === clave // Revisar si el usuario y la clave coinciden con los datos de un usuario
+    );
+
+    if (usuarioEncontrado) { // Si el usuario y la clave coinciden con los datos de un usuario, activar
+      this.isAuthenticatedSubject.next(true); // Activar el estado de autenticación si la autenticación es correcta.
+      this.usuarioSubject.next(usuarioEncontrado.nombreCompleto); // Actualizar el nombre completo del usuario autenticado.
+      this.loginFailedSubject.next(false);  // Restablecer loginFailed a false
+    } else {
+      this.isAuthenticatedSubject.next(false); // Desactivar el estado de autenticación si la autenticación es incorrecta.
+      this.loginFailedSubject.next(true);  // Establecer loginFailed a true si falla la autenticación
+    }
+  }
+
+  buscarBD3(usuario: string, clave: string): Promise<boolean> { // Devuelve una promesa
+    return new Promise((resolve) => {  // Simular la autenticación con un retraso de 4 segundos
+      setTimeout(() => {  // Simular la autenticación con un retraso de 4 segundos
+        const usuarioEncontrado = usuariosSimulados.find( // Buscar un usuario en la lista de usuarios simulados
+          u => u.usuario === usuario && u.clave === clave // Revisar si el usuario y la clave coinciden con los datos de un usuario
+        );
+
+        if (usuarioEncontrado) { // Si el usuario y la clave coinciden con los datos de un usuario, activar
+          this.isAuthenticatedSubject.next(true); // Activar el estado de autenticación si la autenticación es correcta.
+          this.usuarioSubject.next(usuarioEncontrado.nombreCompleto); // Actualizar el nombre completo del usuario autenticado.
+          this.loginFailedSubject.next(false); // Restablecer loginFailed a false
+          resolve(true); // Resuelve la promesa como `true` si la autenticación es exitosa
+        } else {
+          this.isAuthenticatedSubject.next(false); // Desactivar el estado de autenticación si la autenticación es incorrecta.
+          this.loginFailedSubject.next(true); // Establecer loginFailed a true si falla la autenticación
+          resolve(false); // Resuelve la promesa como `false` si la autenticación falla
+        }
+      }, 4000); // Retraso de 4000 ms = 4 segundos
+    });
+  }
+
 
 
   logout(): void {

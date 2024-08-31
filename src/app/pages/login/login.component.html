@@ -1,8 +1,11 @@
 <ion-content>
   <app-header></app-header>
-  <p>
-    login works!
-  </p>
+
+  <!-- @if (isLoading) {
+    <ion-spinner name="bubbles"></ion-spinner>
+  } -->
+  <!-- Contenido del Login -->
+  <p>login works!</p>
   <ion-item>
     <ion-label position="floating">Usuario</ion-label>
     <ion-input [(ngModel)]="usuario"></ion-input>
@@ -16,5 +19,6 @@
   <ion-text color="danger" *ngIf="loginFailed">
     Usuario o clave incorrectos.
   </ion-text>
+
   <app-footer></app-footer>
 </ion-content>
