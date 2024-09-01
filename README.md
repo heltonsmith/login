@@ -83,3 +83,27 @@ ionic g g guard/auth
 ```bash
 ionic g g guard/redirectIfAuth
 ```
+
+**Nota: Se crearon 3 tipos de login (Buscadores en BD) en AuthService**
+**buscarBD - buscarBD2 - buscarBD3**
+
+**Se agregaron estilos dinámicos:**
+**Footer:**
+```bash
+<p [ngStyle]="{'color': getColor()}">...
+```
+**Header**
+```bash
+<div class="cabecera" [ngClass]="{'iniciado': usuario!==''}">...
+```
+
+**Para consumir servicios agregar esta alinea a main.ts**
+```bash
+provideHttpClient(),
+```
+
+**Para crear APIS sin programar**
+```bash
+https://mockapi.io/
+```
+**Verificar boton home y servicio WebService con promesa**: 

@@ -9,6 +9,16 @@
   <ion-button (click)="guardarNombre()">Guardar Nombre</ion-button>
   <br>
   <ion-button (click)="eliminarNombre()">Eliminar Nombre</ion-button>
+  <br>
+  <ion-button (click)="consumirServicio()">
+    @if(cargando){
+      Cargando...
+    }
+    @else{
+      Consumir servicio
+    }
+  </ion-button>
+  <br>
 
   <p>
     home works!
