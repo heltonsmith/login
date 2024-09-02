@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { usuariosSimulados } from '../models/data.models';
+import { WebService } from './web.service';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,30 @@ export class AuthService {
         }
       }, 4000); // Retraso de 4000 ms = 4 segundos
     });
+  }
+
+  webservice = inject(WebService); // Obtener el servicio de webService
+  async buscarBD4(usuario: string, clave: string){
+    const url = 'https://66d412f55b34bcb9ab3d9394.mockapi.io/api/v1/'
+    const res = await this.webservice.request('GET', url, 'users') as Array<{ // Definir la interface para los usuarios de la API
+      user: string,
+      pass: string,
+      name: string,
+      phone: string,
+      id: string
+    }>;
+
+    const user = res.find(u => u.user === usuario && u.pass === clave); // Buscar un usuario en la lista de usuarios de la API
+    if (user) {
+      console.log('Autenticación exitosa!');  // Autenticación exitosa!
+      console.log(user);  // Nombre completo: Hel
+      this.isAuthenticatedSubject.next(true); // Activar el estado de autenticación si la autenticación es correcta.
+      this.usuarioSubject.next(user.name); // Actualizar el nombre completo del usuario autenticado.
+      this.loginFailedSubject.next(false); // Restablecer loginFailed a false
+    } else {
+      this.isAuthenticatedSubject.next(false); // Desactivar el estado de autenticación si la autenticación es incorrecta.
+      this.loginFailedSubject.next(true); // Establecer loginFailed a true si falla la autenticación
+    }
   }
 
 
