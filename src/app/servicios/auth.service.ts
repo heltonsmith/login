@@ -3,6 +3,16 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { usuariosSimulados } from '../models/data.models';
 import { WebService } from './web.service';
 
+export interface UsuarioAPI { // Definir la interface para los usuarios de la API
+  user: string,
+  pass: string,
+  name: string,
+  phone: string,
+  rol: string
+  id: string
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +26,9 @@ export class AuthService {
 
   private usuarioSubject = new BehaviorSubject<string>(''); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
   usuario$ = this.usuarioSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
+
+  private usuarioCompletoSubject = new BehaviorSubject<UsuarioAPI>(null); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
+  usuarioCompleto$ = this.usuarioCompletoSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
 
   // Agregar un BehaviorSubject para el estado de loginFailed
   private loginFailedSubject = new BehaviorSubject<boolean>(false); // Para mostrar si falló la autenticación
@@ -74,14 +87,8 @@ export class AuthService {
 
   webservice = inject(WebService); // Obtener el servicio de webService
   async buscarBD4(usuario: string, clave: string){
-    const url = 'https://66d412f55b34bcb9ab3d9394.mockapi.io/api/v1/'
-    const res = await this.webservice.request('GET', url, 'users') as Array<{ // Definir la interface para los usuarios de la API
-      user: string,
-      pass: string,
-      name: string,
-      phone: string,
-      id: string
-    }>;
+    const url = 'https://66f73ae3b5d85f31a3424a28.mockapi.io/api/v1/'
+    const res = await this.webservice.request('GET', url, 'users') as Array<UsuarioAPI>;
 
     const user = res.find(u => u.user === usuario && u.pass === clave); // Buscar un usuario en la lista de usuarios de la API
     if (user) {
@@ -89,6 +96,7 @@ export class AuthService {
       console.log(user);  // Nombre completo: Hel
       this.isAuthenticatedSubject.next(true); // Activar el estado de autenticación si la autenticación es correcta.
       this.usuarioSubject.next(user.name); // Actualizar el nombre completo del usuario autenticado.
+      this.usuarioCompletoSubject.next(user); // Actualizar el usuario completo como objeto del usuario autenticado.
       this.loginFailedSubject.next(false); // Restablecer loginFailed a false
     } else {
       this.isAuthenticatedSubject.next(false); // Desactivar el estado de autenticación si la autenticación es incorrecta.
@@ -99,6 +107,7 @@ export class AuthService {
 
   logout(): void {
     this.usuarioSubject.next('');  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  //
+    this.usuarioCompletoSubject.next(null);
     this.isAuthenticatedSubject.next(false); // Desloguearse y desactivar el estado de autenticación.  // Desloguearse y
     this.loginFailedSubject.next(false);  // Restablecer loginFailed al cerrar sesión
   }

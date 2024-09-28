@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { DocenteComponent } from './docente/docente.component';
+import { AlumnoComponent } from './alumno/alumno.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     LogoutComponent,
     NotFoundComponent,
+    DocenteComponent,
+    AlumnoComponent
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 <div class="cabecera" [ngClass]="{'iniciado': usuario!==''}">
   @if (nombre){
     <p>
-      Bienvenido: {{nombre}}
+      Bienvenido: {{nombre}} - ROL: {{usuarioCompleto.rol}}
     </p>
   }
   @else{
@@ -11,7 +11,7 @@
   }
   @if (usuario!==''){
     <p>
-      Usuario: {{usuario}}
+      Usuario: {{usuario}} - {{usuarioCompleto.rol}}
     </p>
   }
 </div>

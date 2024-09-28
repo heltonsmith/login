@@ -26,7 +26,7 @@ export class LoginComponent  implements OnInit {
 
   constructor() {}
 
-  login(usuario: string, clave: string): void {
+/*   login(usuario: string, clave: string): void {
 
     this.authService.buscarBD(usuario, clave); // Intentar hacer login
     //this.authService.buscarBD2(usuario, clave); // Intentar hacer login con base en datos fijos
@@ -42,7 +42,7 @@ export class LoginComponent  implements OnInit {
         this.loginFailed = true; // Mostrar mensaje de error si el login falla
       }
     });
-  }
+  } */
 
   /*
   isLoading: boolean = false; // Variable para mostrar el estado de carga
@@ -63,7 +63,7 @@ export class LoginComponent  implements OnInit {
     }
   }*/
 
-  /* isLoading: boolean = false;
+  isLoading: boolean = false;
   async login(usuario: string, clave: string) {
 
     this.isLoading = true; // Activar el estado de carga
@@ -73,14 +73,29 @@ export class LoginComponent  implements OnInit {
     // Suscribirse al observable para verificar el estado de autenticación
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {
 
-      if (isAuthenticated) {
-        this.usuario = ''; // Limpiar el campo de usuario
-        this.clave = ''; // Limpiar el campo de clave
-        this.router.navigate(['/store']); // Redirigir al usuario si el login es exitoso
-      } else {
-        this.loginFailed = true; // Mostrar mensaje de error si el login falla
-      }
+      this.authService.usuarioCompleto$.subscribe(usuarioCompleto => {
+        if (isAuthenticated) {
+          this.usuario = ''; // Limpiar el campo de usuario
+          this.clave = ''; // Limpiar el campo de clave
+
+          if (usuarioCompleto.rol === "docente") {
+            this.usuario = ''; // Limpiar el campo de usuario
+            this.clave = ''; // Limpiar el campo de clave
+            this.router.navigate(['/docente']); // Redirigir al usuario docente si el login es exitoso
+          }
+          else{
+            this.usuario = ''; // Limpiar el campo de usuario
+            this.clave = ''; // Limpiar el campo de clave
+            this.router.navigate(['/alumno']); // Redirigir al usuario alumno si el login es exitoso
+          }
+
+        } else {
+          this.loginFailed = true; // Mostrar mensaje de error si el login falla
+        }
+
+      });
+
     });
-  } */
+  }
 
 }
