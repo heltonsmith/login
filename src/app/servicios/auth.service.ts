@@ -2,16 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { usuariosSimulados } from '../models/data.models';
 import { WebService } from './web.service';
-
-export interface UsuarioAPI { // Definir la interface para los usuarios de la API
-  user: string,
-  pass: string,
-  name: string,
-  phone: string,
-  rol: string
-  id: string
-}
-
+import { UsuarioAPI } from '../models/UsuarioAPI.models';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +18,7 @@ export class AuthService {
   private usuarioSubject = new BehaviorSubject<string>(''); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
   usuario$ = this.usuarioSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
 
+  // utiliza un tipo UsuarioAPI de models/UsuarioAPI.models.ts
   private usuarioCompletoSubject = new BehaviorSubject<UsuarioAPI>(null); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
   usuarioCompleto$ = this.usuarioCompletoSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
 
@@ -88,7 +80,7 @@ export class AuthService {
   webservice = inject(WebService); // Obtener el servicio de webService
   async buscarBD4(usuario: string, clave: string){
     const url = 'https://66f73ae3b5d85f31a3424a28.mockapi.io/api/v1/'
-    const res = await this.webservice.request('GET', url, 'users') as Array<UsuarioAPI>;
+    const res = await this.webservice.request('GET', url, 'users') as Array<UsuarioAPI>; // utiliza un tipo UsuarioAPI de models/UsuarioAPI.models.ts
 
     const user = res.find(u => u.user === usuario && u.pass === clave); // Buscar un usuario en la lista de usuarios de la API
     if (user) {
